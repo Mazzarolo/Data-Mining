@@ -11,8 +11,8 @@ vet <- sort(unique(unlist(ds)))
 
 # code to verify the letters in each row, and complete the dataset
 
-for (i in 1:nrow(ds)) {
-    for (j in 1:length(vet)) {
+for (i in 1 : nrow(ds)) {
+    for (j in 1 : length(vet)) {
         if (any(ds[i, ] == vet[j])) {
             ds2[i, j] <- "SIM"
         } else {
