@@ -10,8 +10,6 @@ for (i in 1 : nrow(ds)) {
     ds[i, 2] <- toupper(ds[i, 2])
 }
 
-show(ds)
-
 players <- c('STEEVE', 'FRANCOIS', 'ALONSO', 'JIMMY', 'RICK', 'YURIKO', 'BARBARA', 'SHELDA')
 
 encodedDS <- data.frame()
@@ -39,4 +37,4 @@ for (i in 1 : nrow(ds)) {
 
 encodedDS <- cbind(encodedDS, WIN)
 
-write.csv(encodedDS,"DS.csv", row.names = TRUE)
+write.csv(encodedDS,"DS.csv", row.names = FALSE)
