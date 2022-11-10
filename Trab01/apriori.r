@@ -12,8 +12,9 @@ library(arules)
 
 rules <- apriori(ds, parameter = list(supp = 0.1, target = "rules"))
 
-rules <- subset(rules, lhs %pin% "WIN")
+rules <- subset(rules, rhs %pin% "WIN")
 
 inspect(head(sort(rules, by = "confidence"), 10))
 
-write.csv(as(sort(rules, by = "confidence"), "data.frame"), "Rules.csv", row.names = FALSE)
+write.csv(as(sort(rules, by = "confidence"), "data.frame"),
+ "Rules.csv", row.names = FALSE)
