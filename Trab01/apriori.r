@@ -10,11 +10,32 @@ str(ds)
 
 library(arules)
 
-rules <- apriori(ds, parameter = list(supp = 0.1, target = "rules"))
+library(stringr)
 
-rules <- subset(rules, rhs %pin% "WIN")
+rules <- apriori(ds, parameter = list(supp = 0.1, conf = 0.9, target = "rules"))
 
-inspect(head(sort(rules, by = "confidence"), 10))
+rules <- subset(rules, rhs %pin% "WIN" | lhs %pin% "WIN")
 
-write.csv(as(sort(rules, by = "confidence"), "data.frame"),
+rules <- as((sort(rules, by = c("confidence", "lift"))), "data.frame")
+
+winRules <- rules[0, ]
+
+loseRules <- rules[0, ]
+
+for (i in 1 : nrow(rules)) {
+    if (grepl("WIN=1", rules[i, 1])) {
+        winRules[nrow(winRules) + 1, ] <- rules[i, ]
+    } else if (grepl("WIN=0", rules[i, 1])) {
+        loseRules[nrow(loseRules) + 1, ] <- rules[i, ]
+    }
+}
+
+write.csv(rules,
  "Rules.csv", row.names = FALSE)
+
+ write.csv(winRules,
+ "WinRules.csv", row.names = FALSE)
+
+write.csv(loseRules,
+ "LoseRules.csv", row.names = FALSE)
+
